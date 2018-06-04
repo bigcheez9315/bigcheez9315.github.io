@@ -17,10 +17,11 @@ $(".category").click(function(event) {
 // instantiate both the question and answer array
 // The user will add questions and answers to the array when he clicks on their corresponding buttons
 // button
-var questionArray = makeArray();
-var answerArray = makeArray();
+var questionArray = [];
+var answerArray = [];
 
 
+$("#form1").hide();
 /* 
 For each button of class "questionButton", add a click function that first
 checks the id to see what the suffix of the button is (eg. button0 has prefix 0).
@@ -47,20 +48,21 @@ $(".questionButton").click(function(event) {
     var buttonID = $(this).attr('id');
     var buttonIndex = parseInt(buttonID[buttonID.length-1]); // find index and convert to number
     // open popup window ot ask question and answer
-        
-    // var categoryID = (buttonIndex % 6) + 1;
-    // var category = $('#' + categoryID).html;
-    // $('#form1').html = category + 'for ' this.val;
-    
-    $("#form1").show();
+  /*      
+    var categoryID = (buttonIndex % 6) + 1;
+    var category = $('#' + categoryID).html;
+    $('#customText').text = category + 'for ' this.val;
+
+*/
+ //   $('.questionButton').hide();
+ //   $("#form1").show();
+
+// add a function that adds the quesiton and answers to the correct spot when save is entered 
+// in form pop-up box
 
 
 
-
-
-
-
-}
+})
 
 
 
