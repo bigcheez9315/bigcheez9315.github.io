@@ -16,8 +16,9 @@ background-color:blue;
 }
 
 input {
-font-size: px;
+font-size: 20px;
 height: 40px;
+width: 100%;
 text-align: right;
 }
 .title {
@@ -26,6 +27,18 @@ font-size: 200%;
 width: 0px;
 text-align: middle;
 
+}
+form {
+display: none;
+position: fixed;
+top: 40%;
+left: 50%;
+font-size: 20px;
+color: white;
+padding: 1em;
+background-color: black;
+transform: translate(-50%,-50%);
+-ms-transform: translate(-50%,-50%);
 }
 </style>
 </head>
@@ -94,7 +107,7 @@ text-align: middle;
 
 <!-- Put pop-up Q & A form here -->
 <form id='form1'>
-    <span id='customText'></span>
+    <span id='customText'>This text will change</span> <br>
     Question (ex. Who was the first American President?)<br>
     <input type="text" name="question">
     <br>
