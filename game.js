@@ -19,8 +19,9 @@ $(".category").click(function(event) {
 // button
 var questionArray = [];
 var answerArray = [];
-
-
+var buttonIndex;
+var buttonID;
+var numberPattern = /\d+/g;
 /* 
 For each button of class "questionButton", add a click function that first
 checks the id to see what the suffix of the button is (eg. button0 has prefix 0).
@@ -32,25 +33,27 @@ responses using the same indexing system
 */
 
 
-// function to pull out last element in string. Will be used to get index of each button
-// last string way
-function getLastChar(str){
-	if(str.length){
-		return str[str.length-1]
-	}
-	return str;
+// write function to instantiate questionArray and answerArray
+function instantiateArray(arr) {
+    for (var i = 0; i < 30; i++) {
+        arr.push(null);
+    }
 }
-
+// check if questionArray and answerArray have been instantiated; if not then instantiate
+if(questionArray.length == 0) {
+    instantiateArray(questionArray);
+    instantiateArray(answerArray);
+}
 // Write click function for button. Should ask user to input question and answer and save
 // responses in corresponding index in questionArray and answerArray
 $(".questionButton").click(function(event) {
-    var buttonID = $(this).attr('id');
-    var buttonIndex = parseInt(buttonID[buttonID.length-1]); // find index and convert to number
+    buttonID = $(this).attr('id');
+    buttonIndex = parseInt(buttonID.match(numberPattern)); // find index and convert to number
     // open popup window ot ask question and answer
-        
+    
     var categoryID = 'category' + ((buttonIndex % 6) + 1);
     var category = $('#' + categoryID).html();
-    $('#customText').text(category + "for $" + $(this).val());
+    $('#customText').text(category + " for $" + $(this).val());
 
 
  //   $('.questionButton').hide();
@@ -64,18 +67,31 @@ $(".questionButton").click(function(event) {
 
 })
 
+$("#form1").submit(function(e) {
+    e.preventDefault();
+});
+
+// run printArray() function when print array button is clicked
+$('#testArray').click(function(event) {
+    for (var i=0; i<questionArray.length; i++) {
+        document.write("question " + questionArray[i] + "; answer:  " + answerArray[i]+ "<br />");
+    }
+
+})
+
+// In the submit function, you need to retrieve the data from the question and answer text
+// boxes and store them in the questionArray and answerArray in their corresponding locations
+function onSubmitFn() {
+    
+    var question = $('input[name="question"]').val();
+    var answer = $('input[name="answer"]').val();
+    questionArray.splice(buttonIndex, 0, question); // add question into questionArray
+    answerArray.splice(buttonIndex, 0, answer);
+    $('#'+buttonID).css('color','yellow');
+    $('#form1').hide();
 
 
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
