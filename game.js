@@ -19,10 +19,17 @@ $(".category").click(function(event) {
 // button
 var questionArray = [];
 var answerArray = [];
+var categoryArray = [];
+var buttonArray = [];
 var buttonIndex;
 var buttonID;
 var numberPattern = /\d+/g;
-/* 
+
+
+// hide the scoreboard
+// $('.topright').hide();
+/*
+ 
 For each button of class "questionButton", add a click function that first
 checks the id to see what the suffix of the button is (eg. button0 has prefix 0).
 This will be the index of the button.
@@ -32,6 +39,10 @@ and answerArray in the corresponding index.We can will then later be able to ret
 responses using the same indexing system
 */
 
+
+//replace all calls to class questionButton to jquery selector of button (":button") with
+// jquery (.filter(":contains(button)")
+// should be : $("button").hasClass("button")
 
 // write function to instantiate questionArray and answerArray
 function instantiateArray(arr) {
@@ -50,14 +61,13 @@ $(".questionButton").click(function(event) {
     buttonID = $(this).attr('id');
     buttonIndex = parseInt(buttonID.match(numberPattern)); // find index and convert to number
     // open popup window ot ask question and answer
-    
+
     var categoryID = 'category' + ((buttonIndex % 6) + 1);
     var category = $('#' + categoryID).html();
     $('#customText').text(category + " for $" + $(this).val());
-
-
- //   $('.questionButton').hide();
- //   $("#form1").show();
+    categoryArray.push(categoryID); // add the category number to array
+    buttonArray.push(buttonID);    
+    
 
     $("#form1").css("display","block");
 // add a function that adds the quesiton and answers to the correct spot when save is entered 
@@ -66,7 +76,7 @@ $(".questionButton").click(function(event) {
 
 
 })
-
+// Prevent the page from automatically refreshing when you hit submit
 $("#form1").submit(function(e) {
     e.preventDefault();
 });
@@ -79,6 +89,29 @@ $('#testArray').click(function(event) {
 
 })
 
+// This is what happens when user clicks 'play game' button
+$('#play').click(function(event) {
+    // loop through all buttons and see which have a question and answer( !=null)
+    // find the index of those buttons by doing % on the suffix
+    // loop through all category and money buttons and which ever ones aren't one of the 
+    // winning numbers (the category numbers which have a button which has been clicked)
+    // should be hidden.
+    // loop through categories and see if they are found in the categoryArray
+    // if so, keep them but if not then they should be hidden 
+    
+    // hide all of the buttons and then show the ones that are in the catArray and buttonArray
+    $("td").hide();
+    $('.topright').show();
+    //for( var i=0 ; i < categoryArray.length; i++ ) {
+   // }
+    for(var i=0; i<buttonArray.length;i++) {
+        var buttonID = buttonArray[i];
+        
+        var colNumber = (parseInt(buttonID.match(numberPattern)) % 6 +1)
+        $('td:nth-child(' + colNumber + ')').show();
+    }
+}) 
+
 // In the submit function, you need to retrieve the data from the question and answer text
 // boxes and store them in the questionArray and answerArray in their corresponding locations
 function onSubmitFn() {
@@ -88,6 +121,7 @@ function onSubmitFn() {
     questionArray.splice(buttonIndex, 0, question); // add question into questionArray
     answerArray.splice(buttonIndex, 0, answer);
     $('#'+buttonID).css('color','yellow');
+    // keep track of the column index
     $('#form1').hide();
 
 
