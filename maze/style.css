@@ -1,0 +1,64 @@
+body {
+	font-family: sans-serif;
+}
+
+.game {
+	width: 480px;
+	height: 480px;
+	position: relative;
+	border: 2px solid #159;
+	border-radius: 2px;
+}
+
+.score-box {
+	padding: 3px 8px 5px;
+	font-size: .8em;
+	color: white;
+	background: #159;
+	border-bottom-left-radius: 2px;
+	position: absolute;
+	right: 0;
+}
+
+.player {
+	width: 24px;
+	height: 24px;
+	background-color: black;
+}
+
+.solid,
+.player,
+.coin {
+	position: absolute;
+}
+
+.wall {
+	color: transparent;
+	width: 48px;
+	height: 48px;
+	background-color: rgba(0, 125, 0, .3);
+}
+
+.coin {
+	width: 12px;
+	height: 12px;
+	position: absolute;
+	background: rgb(255, 204, 0);
+}
+
+
+.finish {
+	width: 96px;
+	height: 48px;
+	background-image: -webkit-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), -webkit-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+	background-image:    -moz-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),    -moz-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+	background-image:     -ms-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),     -ms-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+	background-image:      -o-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),      -o-linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+	background-image:         linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),         linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+
+	-webkit-background-size: 24px 24px;
+	-moz-background-size: 24px 24px;
+	background-size: 24px 24px;
+
+	background-position: 0 0, 12px 12px
+}

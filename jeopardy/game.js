@@ -19,13 +19,12 @@ $(".category").click(function(event) {
 // button
 var questionArray = [];
 var answerArray = [];
-var categoryArray = [];
 var buttonArray = [];
 var buttonIndex;
 var buttonID;
 var numberPattern = /\d+/g;
-
-
+var totalScore = 0;
+var isPlaying = false;
 // hide the scoreboard
 // $('.topright').hide();
 /*
@@ -60,16 +59,30 @@ if(questionArray.length == 0) {
 $(".questionButton").click(function(event) {
     buttonID = $(this).attr('id');
     buttonIndex = parseInt(buttonID.match(numberPattern)); // find index and convert to number
-    // open popup window ot ask question and answer
+    // If game hasn't started yet, open popup window ot ask question and answer
+    if (isPlaying == false) {
+        var categoryID = 'category' + ((buttonIndex % 6) + 1);
+        var category = $('#' + categoryID).html();
+        $('#customText').text(category + " for $" + $(this).val());
+        buttonArray.push(buttonID);    
+        
 
-    var categoryID = 'category' + ((buttonIndex % 6) + 1);
-    var category = $('#' + categoryID).html();
-    $('#customText').text(category + " for $" + $(this).val());
-    categoryArray.push(categoryID); // add the category number to array
-    buttonArray.push(buttonID);    
-    
-
-    $("#form1").css("display","block");
+        $("#form1").css("display","block");
+    }
+    // If game has started and the user clicked a button that has a question and answer provided
+    // then ask user the corresponding question when he clicks button
+    else if(isPlaying == true & buttonArray.indexOf(buttonID) != -1 ) {
+        var question = questionArray[buttonIndex];
+        var answer = answerArray[buttonIndex];
+        var response = prompt(question);
+        if (response == answer) { // if user gets question correct
+            totalScore += parseInt($('#'+buttonID).val());  
+            buttonArray.splice(buttonIndex, 1); // remove the clicked button from button array
+            $('#'+buttonID).css('color','black'); // change text in button back to back
+            $('#'+buttonID).disabled = true;            
+        }
+        $('p').html('Score: $' + totalScore);
+    }
 // add a function that adds the quesiton and answers to the correct spot when save is entered 
 // in form pop-up box
 
@@ -81,6 +94,7 @@ $("#form1").submit(function(e) {
     e.preventDefault();
 });
 
+/*
 // run printArray() function when print array button is clicked
 $('#testArray').click(function(event) {
     for (var i=0; i<questionArray.length; i++) {
@@ -88,6 +102,7 @@ $('#testArray').click(function(event) {
     }
 
 })
+*/
 
 // This is what happens when user clicks 'play game' button
 $('#play').click(function(event) {
@@ -96,19 +111,28 @@ $('#play').click(function(event) {
     // loop through all category and money buttons and which ever ones aren't one of the 
     // winning numbers (the category numbers which have a button which has been clicked)
     // should be hidden.
-    // loop through categories and see if they are found in the categoryArray
-    // if so, keep them but if not then they should be hidden 
-    
-    // hide all of the buttons and then show the ones that are in the catArray and buttonArray
-    $("td").hide();
-    $('.topright').show();
-    //for( var i=0 ; i < categoryArray.length; i++ ) {
-   // }
-    for(var i=0; i<buttonArray.length;i++) {
-        var buttonID = buttonArray[i];
-        
-        var colNumber = (parseInt(buttonID.match(numberPattern)) % 6 +1)
-        $('td:nth-child(' + colNumber + ')').show();
+
+    // If they click jeopardy then run jeopardy game
+    if($('#gameOption').find(":selected").text() == 'Jeopardy') {
+        $("td").hide();
+        $('p').html("Score : $" + totalScore);
+        isPlaying = true;
+        // hide all of the buttons and then show the ones that are in the catArray and buttonArray
+        $('.topright').show();
+
+        // show the used columns 
+        for(var i=0; i<buttonArray.length;i++) {
+            var buttonID = buttonArray[i];
+            
+            var colNumber = (parseInt(buttonID.match(numberPattern)) % 6 +1)
+            $('td:nth-child(' + colNumber + ')').show();
+        }
+    }
+    // if they click maze then run the maze game
+    else if ($('#gameOption').find(":selected").text() == 'Maze') {
+        $("td, th").hide();
+        $('canvas').show();
+        draw();             
     }
 }) 
 
