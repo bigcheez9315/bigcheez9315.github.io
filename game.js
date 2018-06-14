@@ -63,7 +63,7 @@ if(questionArray.length == 0) {
 $("#instructions").click(function(event) {
     showInstructions = !showInstructions;
     if(showInstructions == true) {
-        $('td,#strikes, #jeopardyScore, th, questionButton, .input-group').hide();
+        $('td,#strikes, #jeopardyScore,#GameBoardCanvas,#counter, th, questionButton, .input-group').hide();
         $("#help").css('display', 'block');
         $('#instructions').html("Return to Game");
         $('instructions').show(); 
