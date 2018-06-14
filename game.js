@@ -63,13 +63,13 @@ if(questionArray.length == 0) {
 $("#instructions").click(function(event) {
     showInstructions = !showInstructions;
     if(showInstructions == true) {
-        $('td, th, questionButton, .input-group').hide();
+        $('td,#strikes, #jeopardyScore, th, questionButton, .input-group').hide();
         $("#help").css('display', 'block');
         $('#instructions').html("Return to Game");
         $('instructions').show(); 
      }
     else {
-        $('td, th, questionButton, .input-group').show();
+        $('td, th, #strikes, #jeopardyScore, questionButton, .input-group').show();
         $("#help").css('display', 'none');
 
         $('#instructions').html("Instructions");

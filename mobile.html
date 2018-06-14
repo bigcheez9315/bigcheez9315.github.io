@@ -10,10 +10,12 @@ font-size: 150%;
 width: 150px;
 border-color:blue;
 background-color:blue;
+color:white;
 }
 td {
 font-size: 160%;
 width: 0px;
+color:white;
 background-color:blue;
 }
 canvas {
@@ -29,6 +31,7 @@ text-align: right;
 .title {
 background-color:blue;
 font-size: 200%;
+color: white;
 width: 0px;
 text-align: middle;
 
@@ -60,24 +63,65 @@ transform: translate(-50%,-50%);
     margin-right: auto;
 }
 
+#instructions {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color:red;
+}
+#help {
+    display:none;
+    background-color: black;
+    width:500px;
+    height:500px;
+    color:white;
+}
 body {
     background: black;
     padding: 5px;
 }
 
-p {
-    position: absolute;
-    right: 50px;
-    top: 0;
-    font-weight: bold;
-    font-size: 72px;
+#counter {
+  text-align: center;
+  font-size: 60px;
+  margin-top:0px;
+  float:left;
+  color:white;
 }
 
+#jeopardyScore {
+  text-align: center;
+  font-size: 60px;
+  margin-top:0px;
+  float:left;
+  color:white;
+}
+
+p {
+  text-align: center;
+  font-size: 60px;
+  float:left;
+  margin-top:0px;
+}
+
+#help {
+    display:none;
+    background-color: black;
+    width:500px;
+    height:500px;
+    color:white;
+}
+
+#strikes {
+  text-align: center;
+  font-size: 60px;
+  margin-top:0px;
+  color:white;
+}
 </style>
 </head>
 
 <body>
-<p></p>
 
 <table id='gameboard'>
 <tr>
@@ -141,7 +185,28 @@ p {
 <!-- Make a canvas element for the maze game-->
 <canvas id="GameBoardCanvas" width="500px" height="500px">
 </canvas>
+<p id='counter'></p>
+<p id='mazeScores'></p>
+<div id='strikes' > </div>
+
  
+<button id='instructions'>Instructions </button>
+<div id='help'>
+    <h3> Welcome to our educational Web App!
+</h3>
+    <h3> Introduction: </h3>
+    The goal of this game is to provide students with a fun and interactive way to test themselves on various trivia topics. This game is closely modeled off of the famous online game called "Play Factile", but the difference is that you can play against yourself in this version without anybody else to test you. <br>
+    The way the game works is as follows:
+    <ol> 
+        <li>Fill in the questions and answers that you would like to test yourself on. You click on a button with a number to give that button a question and a corresponding answer. Click the "category" buttons to change the category, and click the "title" button to change the title. When you fill in a question, it will highlight yellow. Feel free to put in as many questions as you would like to test yourself on </li>
+        <li>Once you have entered all of the questions and answers you want to test yourself on, use the dropdown at the bottom to choose between the Jeopardy game and the Maze game. After you select which game you want to play, click "Play Game" button to start playing</li>
+        <li>If you choose <b>'Jeopardy'</b>, then you will have the opportunity to answer the question behind each highlighted number. If you get the question corret then you will have that number added to your total score. If you get it wrong, then you get 1 strike against you. 3 strikes and you lose!  </li>
+        <li>If you choose <b>"Maze"</b> then a maze appears with a ball in the top left corner. You're objective is to get to the goal as quickly as possible. The catch is that every 3 seconds, you are prompted to answer one of the questions that you provided. If you answer correctly then 2 seconds will be shaved off of the timer. If you answer incorrectly, then your time continues and you get 1 strike against you. 3 strikes and you lose! Your score is calculated based on how quickly you finish the maze. Good luck</li>
+    </ol>
+    <h3> Good Luck! </h3>
+
+
+</div>
 <!-- make select form where you can choose between jeopardy and maze game 
 <form name="chooseGame">
    <select name="list" id="gamelist">
