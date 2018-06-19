@@ -59,21 +59,17 @@ if(questionArray.length == 0) {
     instantiateArray(questionArray);
     instantiateArray(answerArray);
 }
-// Instructions Button
-$("#instructions").click(function(event) {
-    showInstructions = !showInstructions;
-    if(showInstructions == true) {
-        $('td,#strikes, #jeopardyScore,#GameBoardCanvas,#counter, th, questionButton, .input-group').hide();
-        $("#help").css('display', 'block');
-        $('#instructions').html("Return to Game");
-        $('instructions').show(); 
-     }
-    else {
-        $('td, th, #strikes, #jeopardyScore, questionButton, .input-group').show();
-        $("#help").css('display', 'none');
+// HOMEPAGE
+// Hide everything except instructions and start button
+$('td,#strikes, #jeopardyScore,#GameBoardCanvas,#counter, th, questionButton, .input-group').hide();
 
-        $('#instructions').html("Instructions");
-    }
+
+// Instructions Button
+$("#start").click(function(event) {
+        $('td,#strikes, #jeopardyScore,#counter, th, questionButton, .input-group').show();
+        $("#help").css('display', 'none');
+        $('#start').hide(); 
+     
 })
 // Write click function for button. Should ask user to input question and answer and save
 // responses in corresponding index in questionArray and answerArray

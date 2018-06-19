@@ -7,7 +7,8 @@
 <style>
 button {
 font-size: 150%;
-width: 150px;
+width: 175px;
+height: 75px;
 border-color:blue;
 background-color:blue;
 color:white;
@@ -62,13 +63,13 @@ transform: translate(-50%,-50%);
     margin-left: auto;
     margin-right: auto;
 }
-
-#instructions {
+#start {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
-    background-color:red;
+    bottom: 0px;
+    right: 350px;
+    background-color:green;
 }
+
 #help {
     display:none;
     background-color: black;
@@ -191,7 +192,7 @@ p {
 <div id='strikes' > </div>
 
  
-<button id='instructions'>Instructions </button>
+<button id='start'>Begin Playing </button>
 <div id='help'>
     <h3> Welcome to our educational Web App!
 </h3>
@@ -201,7 +202,7 @@ p {
     <ol> 
         <li>Fill in the questions and answers that you would like to test yourself on. You click on a button with a number to give that button a question and a corresponding answer. Click the "category" buttons to change the category, and click the "title" button to change the title. When you fill in a question, it will highlight yellow. Feel free to put in as many questions as you would like to test yourself on </li>
         <li>Once you have entered all of the questions and answers you want to test yourself on, use the dropdown at the bottom to choose between the Jeopardy game and the Maze game. After you select which game you want to play, click "Play Game" button to start playing</li>
-        <li>If you choose <b>'Jeopardy'</b>, then you will have the opportunity to answer the question behind each highlighted number. If you get the question corret then you will have that number added to your total score. If you get it wrong, then you get 1 strike against you. 3 strikes and you lose!  </li>
+        <li>If you choose <b>'Jeopardy'</b>, then you will have the opportunity to answer the question behind each highlighted number. If you get the question correct then you will have that number added to your total score. If you get it wrong, then you get 1 strike against you. 3 strikes and you lose!  </li>
         <li>If you choose <b>"Maze"</b> then a maze appears with a ball in the top left corner. You're objective is to get to the goal as quickly as possible. The catch is that every 3 seconds, you are prompted to answer one of the questions that you provided. If you answer correctly then 2 seconds will be shaved off of the timer. If you answer incorrectly, then your time continues and you get 1 strike against you. 3 strikes and you lose! Your score is calculated based on how quickly you finish the maze. Good luck</li>
     </ol>
     <h3> Good Luck! </h3>
