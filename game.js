@@ -9,7 +9,12 @@ $(".title").click(function(event) {
 // Make a function that changes the category title when clicked
 $(".category").click(function(event) {
     var newCategory = prompt("Enter Category");
-    $(this).text(newCategory);
+    if(newCategory != '') {
+        $(this).text(newCategory);
+    }
+    else {
+        alert('Category cannot be left blank! Click category label again to change, but this time add text.');
+    }
 })
 
 
@@ -187,6 +192,9 @@ $('#play').click(function(event) {
 //            var y = setInterval(askQuestion, interval );  
 
         }
+    else {
+         $('.input-group').show();
+    }
 }) 
 
 // In the submit function, you need to retrieve the data from the question and answer text
