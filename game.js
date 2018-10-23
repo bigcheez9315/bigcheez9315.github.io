@@ -9,7 +9,12 @@ $(".title").click(function(event) {
 // Make a function that changes the category title when clicked
 $(".category").click(function(event) {
     var newCategory = prompt("Enter Category");
-    $(this).text(newCategory);
+    if(newCategory != '') {
+        $(this).text(newCategory);
+    }
+    else {
+        alert('Category cannot be left blank! Click category label again to change, but this time add text.');
+    }
 })
 
 
@@ -25,6 +30,11 @@ var buttonID;
 var numberPattern = /\d+/g;
 var totalScore = 0;
 var isPlaying = false;
+var timeToSubtract = 0;
+var timeTracker = 0;
+var seconds = 0;
+var showInstructions = false;
+var strikeCount =0;
 // hide the scoreboard
 // $('.topright').hide();
 /*
@@ -54,6 +64,18 @@ if(questionArray.length == 0) {
     instantiateArray(questionArray);
     instantiateArray(answerArray);
 }
+// HOMEPAGE
+// Hide everything except instructions and start button
+$('td,#strikes, #jeopardyScore,#GameBoardCanvas,#counter, th, questionButton, .input-group').hide();
+
+
+// Instructions Button
+$("#start").click(function(event) {
+        $('td,#strikes, #jeopardyScore,#counter, th, questionButton, .input-group').show();
+        $("#help").css('display', 'none');
+        $('#start').hide(); 
+     
+})
 // Write click function for button. Should ask user to input question and answer and save
 // responses in corresponding index in questionArray and answerArray
 $(".questionButton").click(function(event) {
@@ -72,15 +94,25 @@ $(".questionButton").click(function(event) {
     // If game has started and the user clicked a button that has a question and answer provided
     // then ask user the corresponding question when he clicks button
     else if(isPlaying == true & buttonArray.indexOf(buttonID) != -1 ) {
+        
         var question = questionArray[buttonIndex];
         var answer = answerArray[buttonIndex];
         var response = prompt(question);
         if (response == answer) { // if user gets question correct
             totalScore += parseInt($('#'+buttonID).val());  
             buttonArray.splice(buttonIndex, 1); // remove the clicked button from button array
-            $('#'+buttonID).css('color','black'); // change text in button back to back
-            $('#'+buttonID).disabled = true;            
         }
+        else {//answered wrong; add 1 strike
+            strikeCount += 1;
+            $('#strikes').html("Strikes: " + strikeCount);
+
+            if (strikeCount == 3) {
+                alert("Three strikes and you're out! Better Luck Next Time!");
+                $('*').hide();
+            }
+        }
+        $('#'+buttonID).css('color','white'); // change text in button back to back
+        $('#'+buttonID).disabled = true;            
         $('p').html('Score: $' + totalScore);
     }
 // add a function that adds the quesiton and answers to the correct spot when save is entered 
@@ -94,18 +126,11 @@ $("#form1").submit(function(e) {
     e.preventDefault();
 });
 
-/*
-// run printArray() function when print array button is clicked
-$('#testArray').click(function(event) {
-    for (var i=0; i<questionArray.length; i++) {
-        document.write("question " + questionArray[i] + "; answer:  " + answerArray[i]+ "<br />");
-    }
-
-})
-*/
 
 // This is what happens when user clicks 'play game' button
 $('#play').click(function(event) {
+        // Make play button and select option dissapear
+        $('.input-group').hide();
     // loop through all buttons and see which have a question and answer( !=null)
     // find the index of those buttons by doing % on the suffix
     // loop through all category and money buttons and which ever ones aren't one of the 
@@ -118,6 +143,7 @@ $('#play').click(function(event) {
         $('p').html("Score : $" + totalScore);
         isPlaying = true;
         // hide all of the buttons and then show the ones that are in the catArray and buttonArray
+            $('#strikes').html("Strikes: " + strikeCount);
         $('.topright').show();
 
         // show the used columns 
@@ -133,6 +159,41 @@ $('#play').click(function(event) {
         $("td, th").hide();
         $('canvas').show();
         draw();             
+        // Set the date we're counting down to
+        //  var countDownDate = new Date().getTime() ;
+        var timer = setInterval(function() {
+        
+            $('#strikes').html("Strikes: " + strikeCount);
+            seconds += .2; 
+            timeTracker += .2; //increment time by .2 seconds
+            timeTracker = Math.round( timeTracker * 10 ) / 10;
+            var interval = 3;
+            if ((timeTracker % interval) == 0) { // it has been enough time then ask question
+            askQuestion();
+            }
+             
+           // Time calculations for seconds
+             
+            // Output the result in an element with id="counter"
+            document.getElementById("counter").innerHTML = "Time Elapsed: " + (Math.round(seconds)  - timeToSubtract) +  "s" ;
+            // Check to see if user hit the goal 
+             if(player.x == 0 && player.y == 9) {//bottom left corner then print 'Game Over' Message 
+                // Alert that game is over
+                alert('Game Over!');
+                // Pause 'Time Elapsed'
+                clearInterval(timer);                 
+                // Show score span  
+                var finalScore = (100-seconds)*600;
+                $('#mazeScores').html('Final Score: ' + Math.round(finalScore));
+            }
+}, 200 );
+
+//            var interval = 2000;
+//            var y = setInterval(askQuestion, interval );  
+
+        }
+    else {
+         $('.input-group').show();
     }
 }) 
 
@@ -142,15 +203,14 @@ function onSubmitFn() {
     
     var question = $('input[name="question"]').val();
     var answer = $('input[name="answer"]').val();
-    questionArray.splice(buttonIndex, 0, question); // add question into questionArray
-    answerArray.splice(buttonIndex, 0, answer);
+    questionArray.splice(buttonIndex, 1, question); // add question into questionArray
+    answerArray.splice(buttonIndex, 1, answer);
     $('#'+buttonID).css('color','yellow');
     // keep track of the column index
     $('#form1').hide();
 
 
 }
-
 
 
 
